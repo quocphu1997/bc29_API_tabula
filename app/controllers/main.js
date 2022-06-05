@@ -151,12 +151,36 @@ function addList() {
   var isValid = true; //tạo flag để check
   var validation = new Validation();
 
+  // goi lai de lay API
+  service
+    .getListAPI()
+    .then(function (result) {
+      // xuat list ra
+      renderList(result.data);
+      isValid &=
+        validation.ktraTaiKhoanTonTai(
+          Up_taiKhoan,
+          "tbtkhoan",
+          "(*)Tài khoản tồn tại",
+          result.data
+        ) &&
+        validation.ktraRong(
+          Up_taiKhoan,
+          "tbtkhoan",
+          "(*)Vui lòng không để trống"
+        );
+      // console.log(result.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   // check tai khoan
   isValid &= validation.ktraRong(
     Up_taiKhoan,
     "tbtkhoan",
     "(*)Vui lòng không để trống"
   );
+  // check trung tai khoan
 
   //check ten
   isValid &=
@@ -195,7 +219,7 @@ function addList() {
       Up_moTa,
       "tbmoTa",
       "(*)Vui lòng không nhập hơn 60 ký tự",
-      10,
+      1,
       60
     );
   // check chon ND

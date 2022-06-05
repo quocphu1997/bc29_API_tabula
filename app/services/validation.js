@@ -11,7 +11,6 @@ function Validation() {
     getEle(errorID).style.display = "none";
     return true;
   };
-  //   kiểm tra trùng tài khoản
 
   //kiemtra ten
   this.ktraKysoTen = function (value, errorID, message) {
@@ -80,7 +79,29 @@ function Validation() {
   };
   //   kiểm tra mo ta trong khoảng
   this.ktramoTa = function (value, errorID, message, min, max) {
-    if (value.trim() >= min && value.trim() <= max) {
+    if (value.trim().length >= min || value.trim().lenght <= max) {
+      // true
+      getEle(errorID).innerHTML = "";
+      getEle(errorID).style.display = "none";
+      return true;
+    } else {
+      // false
+      getEle(errorID).innerHTML = message;
+      getEle(errorID).style.display = "block";
+      return false;
+    }
+  };
+
+  //   kiểm tra tài khoản tồn tại
+  this.ktraTaiKhoanTonTai = function (value, errorID, message, array) {
+    var isStatus = true; // biến cờ hiệu
+    array.forEach(function (index, i) {
+      if (index.taiKhoan === value) {
+        //   trùng tài khoản
+        isStatus = false;
+      }
+    });
+    if (isStatus) {
       // true
       getEle(errorID).innerHTML = "";
       getEle(errorID).style.display = "none";
